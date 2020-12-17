@@ -8,10 +8,6 @@ env:
 python:
 - '3.7.6'
 
-#script:
-#- cd $HOME/diff_classifier
-#- python tests.py
-
 install:
 - pip install -U tox-travis coverage coveralls
 - travis_retry pip install $PIP_DEPS
