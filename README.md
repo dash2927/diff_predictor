@@ -20,6 +20,6 @@ Diff_predictor uses data taken from Amazon Simple Storage Service (S3) located o
 To prevent data leakage between testing and training sets when creating ensemble decision tree models, the datapoints are binned such that all datapoints that were used in the same statistical feature calculation are in the same bin. The datapoints are then split into training and testing sets based on a desired split. For example, a 0.7 training/testing split would have 70% of all data in the training set and 30% of data in the testing set. For binned feature data, datasets are split in a way that no data within bins are separated. Hyperparameters are then set and cross-validation is applied to the desired model for the training set. A random grid-search is applied at this time to choose which parameters perform the best. At the end of cross-validation, the model with the best performance and parameters will then be selected. This selected model will then be used with the test set that was derived earlier. For ensemble decision trees, SHAP is then used to analyze features.
 
 ### References
-Curtis, C., A. Rokem, and E. Nance, diff_classifier: Parallelization of multi-particle tracking video analyses. Journal of open source software, 2019. 4(36): p. 989.
-Shapley, L.S., A value for n-person games. Contributions to the Theory of Games, 1953. 2(28): p. 307-317.
+1. Curtis, C., A. Rokem, and E. Nance, diff_classifier: Parallelization of multi-particle tracking video analyses. Journal of open source software, 2019. 4(36): p. 989.
+2. Shapley, L.S., A value for n-person games. Contributions to the Theory of Games, 1953. 2(28): p. 307-317.
 
