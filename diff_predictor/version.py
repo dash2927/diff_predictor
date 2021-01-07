@@ -1,5 +1,6 @@
 from __future__ import absolute_import, division, print_function
 from os.path import join as pjoin
+from os.path import abspath, dirname
 
 # Format expected by setup.py and doc/source/conf.py: string of form "X.Y.Z"
 _version_major = 0
@@ -26,9 +27,9 @@ CLASSIFIERS = ["Development Status :: 3 - Alpha",
                "Topic :: Scientific/Engineering"]
 
 # Description should be a one-liner:
-description = "diff_predictor: a prediciton package for multiple particle tracking data"
+DESCRIPTION = "diff_predictor: a prediciton package for multiple particle tracking data"
 # Long description will go up on the pypi page
-long_description = """
+LONG_DESCRIPTION = """
 diff_predictor
 ========
 Diff_predictor is a prediction package for multiple particle tracking data and
@@ -50,8 +51,8 @@ All trademarks referenced herein are property of their respective holders.
 NAME = "diff_predictor"
 MAINTAINER = "David Shackelford"
 MAINTAINER_EMAIL = "dash2927@uw.edu"
-DESCRIPTION = description
-LONG_DESCRIPTION = long_description
+DESCRIPTION = DESCRIPTION
+LONG_DESCRIPTION = LONG_DESCRIPTION
 URL = "https://github.com/dash2927/diff_predicto"
 DOWNLOAD_URL = ""
 LICENSE = "MIT"
@@ -63,5 +64,9 @@ MINOR = _version_minor
 MICRO = _version_micro
 VERSION = __version__
 PACKAGE_DATA = {'diff_predictor': [pjoin('data', '*')]}
-REQUIRES = ["numpy"]
 PYTHON_REQUIRES = ">= 3.7.6"
+
+src_dir = dirname(abspath(__file__))
+requires_path = abspath(pjoin(src_dir, "requirements.txt"))
+with open(requires_path) as f:
+    REQUIRES = [line.strip('\n') for line in f.readlines()]
