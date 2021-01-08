@@ -160,3 +160,48 @@ def print_log(func, outputfile='./out.txt', access='w'):
         sys.stdout = orig_stdout
         return ret_val
     return decorator_log
+
+
+def search_nested_dict(value, keyword):
+    '''
+    Function which searches a nested dictionary
+    recurrently for a keyword.
+    Parameters
+    ----------
+    value : dict
+        dictionary to search through
+    keyword : str
+        keyword to find withing dictionary
+    Returns
+    -------
+    result
+        resulting value of search
+    '''
+    result = None
+    if keyword in value.keys() and not isinstance(value[keyword], dict):
+        return(value[keyword])
+    else:
+        for key in value.keys():
+            if isinstance(value[key], dict):
+                result = search_nested_dict(value[key], keyword)
+            if result is not None:
+                break
+    return result
+
+
+def is_numeric(value):
+    '''
+    Function to check if a value is a numeric value or not
+
+    Parameters
+    ----------
+    value : any value
+        value to check if it is numeric or not
+    Returns
+    -------
+    Will return a float of tht value if it is numeric or false otherwise
+    '''
+    try:
+        return float(value)
+    except Exception:
+        return False
