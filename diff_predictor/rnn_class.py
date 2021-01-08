@@ -1,3 +1,5 @@
+# Placeholder for future object-oriented implementation
+
 import numpy as np
 from pandas import read_csv
 from keras.models import Sequential
