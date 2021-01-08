@@ -97,14 +97,14 @@ def get_files(path, keywords = ["features_ OR msd_"]):
     Takes in a path and list of keywords. Returns a list of filenames
     that are within the path that contain one of the keyword in the list.
     Set keyword to "" to get all files in the path.
-    
+
     Parameters
     ----------
     path : string
         file path
     keywords : string or [string] : ["features_ OR msd_"]
-        keywords to look for in the file path. 
-        
+        keywords to look for in the file path.
+
     Returns
     -------
     file_list : list
@@ -121,11 +121,24 @@ def get_files(path, keywords = ["features_ OR msd_"]):
     return file_list
 
 
-# Pre: Both files must exhist; Feature must be in the feature file
-# Throws a FileNotFoundError exception if preconditions not met
-#
-# Adds a feature from produced features file to the track file.
 def combine_track(trackFile, feature="type"):
+    '''
+    Adds a feature from produced feature file to the track file.
+
+    Both files must exhist. Feature must be in feature file.
+
+    Parameters
+    ----------
+    trackfile : string
+        file to search for
+    feature : string
+        feature in the feature file to append
+
+    Returns
+    -------
+    trackDF : pandas.dataFrame
+        dataframe of appended track and feature
+    '''
     trackDF = pd.read_csv(trackFile)
     featureDF = find_pair(trackFile)
     trackDF[feature] = np.nan
@@ -137,12 +150,20 @@ def combine_track(trackFile, feature="type"):
         return trackDF
 
 
-# Trys to find the feature file pair for either msd_ or Traj_
-# Return the pd.DataFrame of that pair if found.
 def find_pair(filename):
     '''
-    Trys to find the feature file pair for either msd_ or Traj_ and 
+    Trys to find the feature file pair for either msd_ or Traj_ and
     Returns the pd.DataFrame of that pair if found.
+
+    Parameters
+    ----------
+    filename : string
+        file to search for
+
+    Returns
+    -------
+    trackDF : pandas.dataFrame
+        DataFrame pair
     '''
     try:
         filename = filename.replace("msd_", "").replace("Traj_", "")
