@@ -1,10 +1,10 @@
+from os import chdir, getcwd
 import warnings
 import functools
 import inspect
 import time
 import sys
-import pathlib
-from datetime import datetime 
+from datetime import datetime
 
 
 string_types = (type(b''), type(u''), type(f''))
@@ -62,23 +62,22 @@ class tcolor:
     BackgroundLightMagenta = "\033[105m"
     BackgroundLightCyan    = "\033[106m"
     BackgroundWhite        = "\033[107m"
-    
-        
-        
-def change_dir(directory = '.'):
+
+
+def change_dir(directory='.'):
     '''
     Simple funciton to change current directory.
     '''
     chdir(directory)
     workbook = getcwd()
-    print(f'Using current directory for loading/saving: ' + 
+    print(f'Using current directory for loading/saving: ' +
           tcolor.Blue + tcolor.Bold + f'{workbook}' + tcolor.ResetAll)
     print(f'To change current directory, call change_dir(...)')
 
-    
+
 change_dir('.')
-        
-    
+
+
 def deprecated(reason):
     '''
     Decorator which can be used to mark functions
@@ -94,7 +93,8 @@ def deprecated(reason):
             @functools.wraps(func1)
             def new_func1(*args, **kwargs):
                 warnings.simplefilter('always', DeprecationWarning)
-                warnings.warn(fmt1.format(name=repr(func1.__name__), reason=reason),
+                warnings.warn(fmt1.format(name=repr(func1.__name__),
+                                          reason=reason),
                               category=DeprecationWarning,
                               stacklevel=2)
                 warnings.simplefilter('default', DeprecationWarning)
@@ -115,8 +115,8 @@ def deprecated(reason):
         return new_func2
     else:
         raise TypeError(repr(type(reason)))
-    
-        
+
+
 def timer(func):
     '''
     Decorator which will time funciton from start to
@@ -134,10 +134,10 @@ def timer(func):
     return decorator_timer
 
 
-def print_log(func, outputfile = './out.txt', access = 'w'):
+def print_log(func, outputfile='./out.txt', access='w'):
     '''
     Decorator which saves all print statement to a log file. Note
-    that this method temporarily changes sys.stdout which may not 
+    that this method temporarily changes sys.stdout which may not
     be desired.
     '''
     @functools.wraps(func)
@@ -146,7 +146,7 @@ def print_log(func, outputfile = './out.txt', access = 'w'):
               f"with print output saved to {outputfile}.")
         orig_stdout = sys.stdout
         f = open(outputfile, access)
-        sys.stdout = f 
+        sys.stdout = f
         header = (f'RUNNING FUNCTION {repr(func.__name__)} | ' +
                   f'MONTH-DAY-YEAR ' +
                   datetime.today().strftime("%b-%d-%Y | ") +
@@ -160,3 +160,48 @@ def print_log(func, outputfile = './out.txt', access = 'w'):
         sys.stdout = orig_stdout
         return ret_val
     return decorator_log
+
+
+def search_nested_dict(value, keyword):
+    '''
+    Function which searches a nested dictionary
+    recurrently for a keyword.
+    Parameters
+    ----------
+    value : dict
+        dictionary to search through
+    keyword : str
+        keyword to find withing dictionary
+    Returns
+    -------
+    result
+        resulting value of search
+    '''
+    result = None
+    if keyword in value.keys() and not isinstance(value[keyword], dict):
+        return(value[keyword])
+    else:
+        for key in value.keys():
+            if isinstance(value[key], dict):
+                result = search_nested_dict(value[key], keyword)
+            if result is not None:
+                break
+    return result
+
+
+def is_numeric(value):
+    '''
+    Function to check if a value is a numeric value or not
+
+    Parameters
+    ----------
+    value : any value
+        value to check if it is numeric or not
+    Returns
+    -------
+    Will return a float of tht value if it is numeric or false otherwise
+    '''
+    try:
+        return float(value)
+    except Exception:
+        return False

@@ -11,15 +11,15 @@ if 'core' not in sys.modules:
 
 def balance_data(df, target, **kwargs):
     """
-    Balance spatial data using undersampling. Assumes input will 
+    Balance spatial data using undersampling. Assumes input will
     be a dataframe and data will be used for categorical classification
-    
+
     Parameters
     ----------
-    
+
     Returns
     -------
-    
+
     """
     if 'random_state' not in kwargs:
         random_state = 1
@@ -46,10 +46,10 @@ def checkerboard(size):
     """
     Parameters
     ----------
-    
+
     Returns
     -------
-    
+
     """
     rows = int(size/2)
     checks = list(range(0, size*size, size+1))
@@ -66,15 +66,16 @@ def checkerboard(size):
     return checks
 
 
-@deprecated("Old method using checkerboard, use other method")
+@deprecated("This is an old method for using checkerboard and is only
+            present for documentation use. Use checkerboard() instead.")
 def bin_data_checkerboard(df):
     """
     Parameters
     ----------
-    
+
     Returns
     -------
-    
+
     """
     bins = list(range(0, 2048+1, 256))
     df['binx'] = pd.cut(df.X, bins, labels=[0, 1, 2, 3, 4, 5, 6, 7],
@@ -95,10 +96,10 @@ def bin_data(df, res=128):
     """
     Parameters
     ----------
-    
+
     Returns
     -------
-    
+
     """
     assert not 2048 % res and res >= 128, \
         "resolution needs to be a factor of 2048 and > 128"
@@ -115,15 +116,16 @@ def bin_data(df, res=128):
     return df
 
 
-@deprecated("Old method using checkerboard, use other method")
+@deprecated("This is an old method for using checkerboard and is only present
+            for documentation use. Use checkerboard() instead.")
 def checkerboard_split(df, target, test_val_split=1.0, seed=1234):
     """
     Parameters
     ----------
-    
+
     Returns
     -------
-    
+
     """
     np.random.seed(seed)
     le = preprocessing.LabelEncoder()
@@ -150,10 +152,10 @@ def split_data(df, target, train_split, test_val_split=1.0, seed=1234):
     """
     Parameters
     ----------
-    
+
     Returns
     -------
-    
+
     """
     np.random.seed(seed)
     le = preprocessing.LabelEncoder()
@@ -182,10 +184,10 @@ def get_lengths(df, X_train, X_test, X_val=None):
     """
     Parameters
     ----------
-    
+
     Returns
     -------
-    
+
     """
     print(f'Tot before split: {len(df)}')
     print(f'Training: {len(X_train)} ({len(X_train)/len(df):.3f}%)')
